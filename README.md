@@ -1,17 +1,49 @@
-# Тренажёр печати
+# stuk
 
-Минималистичный TUI для практики печати на русском и английском.
+**English** · [Русский](README.ru.md)
 
-![Экран stuk](docs/preview.png)
+A minimal terminal typing trainer for Russian and English.
 
-Текст в тонкой рамке, тёмный фон и мягкая подсветка ошибок. Набранные буквы
-светлеют, текущая буква выделяется лавандовым курсором. Скорость и точность
-появляются после завершения упражнения.
+![stuk typing screen](docs/preview.png)
 
-## Запуск
+Thin borders, quiet colors, and room to focus. Typed letters brighten, mistakes
+get a soft highlight, and a lavender cursor marks the next character. Speed and
+accuracy appear after you finish an exercise.
 
-Нужны **Python 3.10+**, модуль `curses` и терминал с UTF-8 на Linux или macOS.
-Внешних зависимостей нет. Скачайте репозиторий и запустите тренажёр:
+## Install
+
+Requires **Python 3.10+** with `curses`, `curl`, and a UTF-8 terminal on Linux
+or macOS. Install with one command:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/butukay/stuk/master/install.py | python3
+```
+
+Then run `stuk` from any directory. If `~/.local/bin` was missing from your
+`PATH`, the installer adds it for Bash, Zsh, or Fish; open a new terminal.
+The installer also prints the full command path so you can start immediately.
+
+No `pip`, `git`, virtual environment, or `sudo` is needed. The app lives at
+`~/.local/share/stuk/stuk.pyz` (or `$XDG_DATA_HOME/stuk/stuk.pyz`), with a
+command at `~/.local/bin/stuk`. Installation downloads source from this GitHub
+repository; the trainer itself works offline. **Run the same command to update.**
+Your settings and practice history are preserved.
+
+## Run
+
+```sh
+stuk
+stuk --lang en
+stuk --words 50
+stuk --mode free
+stuk --lang en --letters asdfjkl
+stuk --help
+```
+
+The first exercise uses Russian, 25 words, and gradual letter unlocks. Switch
+languages with `F4` or `--lang en`. Exercise length can be 1–60 words.
+
+To try it directly from a checkout without installing:
 
 ```sh
 git clone https://github.com/butukay/stuk.git
@@ -19,197 +51,160 @@ cd stuk
 ./stuk
 ```
 
-При первом запуске — 25 слов и постепенное открытие букв. Можно выбрать язык,
-длину и режим:
+## Controls
 
-```sh
-./stuk --lang en
-./stuk --words 50
-./stuk --mode free
-./stuk --lang en --letters asdfjkl
-./stuk --help
-```
-
-Длина упражнения — от 1 до 60 слов. Команда запуска работает из любой папки,
-если указать путь к файлу `stuk`.
-
-Для установки команды `stuk`, доступной из любой папки:
-
-```sh
-python3 -m venv "$HOME/.local/share/stuk/app"
-"$HOME/.local/share/stuk/app/bin/python" -m pip install .
-mkdir -p "$HOME/.local/bin"
-ln -sf "$HOME/.local/share/stuk/app/bin/stuk" "$HOME/.local/bin/stuk"
-stuk
-```
-
-Папка `~/.local/bin` должна быть в `PATH`. Установленная копия использует
-системный Python и работает независимо от исходников. Для обновления повторите
-команду `pip install .` из папки проекта.
-
-## Управление
-
-| Клавиша | Действие |
+| Key | Action |
 | --- | --- |
-| `Esc` или `Ctrl+C` | Выйти |
-| `Tab` | Новый текст |
-| `F2` или `Ctrl+O` | Открыть / закрыть настройки |
-| `F3` или `Ctrl+P` | Открыть / закрыть прогресс и графики |
-| `F4` или `Ctrl+L` | Переключить русский / английский и начать новый текст |
-| Печатать | Начать упражнение; таймер запустится с первой буквы |
-| `Backspace` | Исправить предыдущую букву |
-| `Ctrl+W` | Удалить предыдущее слово |
-| `Ctrl+K` | Показать / скрыть клавиатуру |
-| `Enter` после завершения | Следующее упражнение |
+| `Esc` or `Ctrl+C` | Quit |
+| `Tab` | Start a fresh exercise |
+| `F2` or `Ctrl+O` | Open / close settings |
+| `F3` or `Ctrl+P` | Open / close progress and charts |
+| `F4` or `Ctrl+L` | Switch Russian / English and start a fresh exercise |
+| Type | Begin; the timer starts on your first character |
+| `Backspace` | Correct the previous character |
+| `Ctrl+W` | Delete the previous word |
+| `Ctrl+K` | Show / hide the keyboard |
+| `Enter` after finishing | Start the next exercise |
 
-Подсказки внизу упражнения расположены в порядке `Esc`, `Tab`, `F2`, `F3`, `F4`.
-На экране прогресса `F4` меняет язык просмотра; текущая тренировка сохраняется.
-В редакторе букв можно переключаться через `F4`: черновики RU/EN сохраняются
-до применения или отмены редактирования.
+The exercise footer follows `Esc`, `Tab`, `F2`, `F3`, `F4`. In progress,
+`F4` changes only the language being viewed; your exercise stays in place.
+In the custom-letter editor, `F4` keeps separate RU/EN drafts until you apply
+or cancel editing.
 
-В настройках `Esc` возвращает к упражнению. Стрелки `↑↓` выбирают строку,
-`←→` или `Enter` меняют значение. Доступны режим, свои буквы, адаптация, палитра, клавиатура, язык и
-длина упражнения — 10, 25 или 50 слов; произвольная длина задаётся через `--words`.
-Таймер приостанавливается в настройках, на экране прогресса и при слишком маленьком окне.
+In settings, use `↑↓` to select a row and `←→` or `Enter` to change its value.
+`Esc` returns to practice. Choose your mode, letters, adaptation, palette,
+keyboard, language, and exercise length (10, 25, or 50 words; use `--words`
+for other lengths). The timer pauses in menus and undersized terminals.
 
-## Клавиатура и настройки
+## Keyboard and settings
 
-Клавиатура скрыта по умолчанию. Включите её в настройках — будет видна
-раскладка выбранного языка с подсветкой следующей клавиши, включая пробел.
+The optional keyboard shows the selected layout and highlights the next key,
+including Space. Turn it on in settings or with `Ctrl+K`.
 
-![Экран с клавиатурой](docs/keyboard.png)
+![stuk with the optional keyboard](docs/keyboard.png)
 
-Для клавиатуры нужно окно от 46 × 22. Если уменьшить окно, клавиатура временно
-скрывается; выбранная настройка сохраняется.
+The keyboard needs at least 46 × 22 terminal cells. In smaller windows it
+temporarily disappears while its saved preference stays enabled. The app
+adapts to resizing and keeps the cursor visible. Below 32 × 12, typing pauses.
 
-Изменения сохраняются в `$XDG_CONFIG_HOME/stuk/settings.json` или
-`~/.config/stuk/settings.json`. Параметры командной строки имеют приоритет
-при запуске. Повреждённые значения настроек игнорируются.
-Для сброса настроек удалите этот файл. История упражнений хранится отдельно.
+Settings are saved to `$XDG_CONFIG_HOME/stuk/settings.json`, falling back to
+`~/.config/stuk/settings.json`. Command-line options override saved preferences
+for the current launch. Invalid settings are ignored. Remove this file to reset
+preferences; practice history is stored separately.
 
-Ошибочная буква не блокирует ввод. Её можно исправить, пока упражнение
-не завершено; точность учитывает и исправленные ошибки. Скорость считается
-по правильным символам: пять символов — одно условное слово.
+A wrong character does not block typing. You can correct it until the exercise
+ends; accuracy still counts corrected mistakes. Speed uses correctly typed
+characters, with five characters counting as one word.
 
-Интерфейс подстраивается под размер окна и держит курсор в поле зрения.
-Минимальный размер — 32 × 12; в меньшем окне ввод текста приостановлен.
-Для полной палитры нужен терминал с 256 цветами, например с
-`TERM=xterm-256color`. В остальных терминалах используются базовые цвета
-или монохромный режим.
+For the full palette, use a terminal with 256 colors, such as
+`TERM=xterm-256color`. Other terminals use basic colors or monochrome.
+All vocabulary is bundled, and practice needs no network connection.
 
-Все слова встроены. Приложение работает офлайн.
+## Input layout
 
-## Раскладка ввода
+Type with either the Russian or English system layout: input maps to the
+physical keys of the selected practice language. For example, `ghbdtn` counts
+as `привет` in Russian, and `руддщ` becomes `hello` in English. This also works
+in the custom-letter editor.
 
-Печатать можно с русской или английской раскладкой: ввод сопоставляется
-с физическими клавишами выбранного языка тренировки. Например, `ghbdtn`
-засчитывается как `привет` в русском упражнении, а `руддщ` — как `hello`
-в английском. Это работает и в редакторе своих букв.
+The mapping includes `ё`, `х`, `ъ`, `ж`, `э`, `б`, `ю` and their English
+punctuation keys. Case is preserved, so Shift and Caps Lock still affect
+correctness. Mapping never depends on the expected character: the wrong key
+remains a mistake. Shortcuts are handled separately.
 
-Учитываются клавиши `ё`, `х`, `ъ`, `ж`, `э`, `б`, `ю` и их английские знаки.
-Регистр сохраняется: `Shift` и `Caps Lock` по-прежнему влияют на правильность
-ввода. Сопоставление не зависит от ожидаемой буквы, поэтому неверная клавиша
-остаётся ошибкой. Горячие клавиши обрабатываются отдельно.
+Standard QWERTY and ЙЦУКЕН layouts are used. Terminals send characters rather
+than physical key codes, so ambiguous punctuation such as `.` in Russian
+practice is interpreted as the English-layout key for `ю`.
 
-Используются стандартные QWERTY и ЙЦУКЕН. Терминал передаёт символы, поэтому
-знаки вроде `.` в русском упражнении трактуются как клавиши `ю` английской
-раскладки.
+## Adaptive practice
 
-## Адаптивная практика
+Adaptation is on by default. Turn it off in `F2` or set `"adaptive": false` in
+settings. Up to three focus letters appear above the text: newly unlocked
+letters and letters that need more accuracy or speed.
 
-Адаптация включена по умолчанию; её можно отключить в `F2 → адаптивный текст`
-или через `"adaptive": false` в настройках. Фокус включает новые, ещё не уверенные
-буквы, а также буквы с ошибками или задержками. До трёх целевых букв показаны
-в заголовке как `фокус`.
+The next exercise includes these letters more often, including rare ones.
+At least 35% of word selections remain ordinary selections within your chosen
+alphabet. Adjacent repeats are avoided when the word pool allows it.
+Analysis uses the latest 30 completed exercises in the selected language,
+including corrected mistakes. Menu time and long pauses are excluded from
+inter-letter timing.
 
-Следующий текст чаще содержит эти буквы, включая редкие. Не менее 35% слов
-по-прежнему выбираются обычным способом, с учётом выбранного набора букв.
-Соседние повторы избегаются, когда в наборе есть несколько подходящих слов.
-Анализ учитывает последние 30 завершённых упражнений выбранного языка,
-поэтому старые ошибки постепенно перестают влиять на подбор. Исправленные
-ошибки тоже учитываются. Длинные остановки и время в меню исключены из оценки
-задержек между буквами.
+After an exercise, see its number and your confident-letter count. With enough
+history, results also compare speed with the previous five exercises of the
+same language and length, or show a personal best. Comparisons require three
+earlier exercises; personal bests require at least 90% accuracy.
 
-После упражнения видны его номер и число уверенных букв. При достаточной
-истории добавляется сравнение скорости со средним по последним пяти упражнениям
-того же языка и длины либо отметка личного рекорда. Сравнение начинается после
-трёх предыдущих упражнений; рекорд требует точности не ниже 90%.
+A letter is confident after 12 attempts at 97% accuracy or better, with at least
+five measured intervals averaging no more than 0.5 seconds. Current confidence
+uses the latest 30 exercises: 33 letters in Russian and 26 in English.
 
-Буква считается уверенной после 12 попыток с точностью от 97%, если есть хотя бы
-пять измеренных интервалов со средним не больше 0,5 с. Счётчик показывает текущую
-уверенность за последние 30 упражнений: 33 буквы для русского, 26 для английского.
+## Letter unlocks and practice modes
 
-## Постепенное открытие и выбор практики
+**Guided** practice starts with six letters: `е н о т а с` in Russian and
+`e n i r a t` in English. Text uses only unlocked letters. Each stage supports
+real words, and the newest letter gets extra practice.
 
-По умолчанию выбран режим **по этапам** (`guided`). Начало — шесть букв:
-`е н о т а с` для русского и `e n i r a t` для английского. Текст содержит только
-доступные буквы. Для каждого этапа есть настоящие слова; новая буква получает
-дополнительные повторения.
+Once every available letter has reached the confidence threshold at least
+once, the next letter unlocks. Earned unlocks are permanent, even if later
+exercises go worse. Existing practice history also counts.
 
-Когда все доступные буквы хотя бы раз достигли описанного выше порога уверенности,
-открывается следующая. После упражнения появляется сообщение об открытии.
-Заработанные буквы остаются освоенными и открытыми, даже если следующие
-упражнения получатся хуже. Вся прежняя история тоже учитывается.
+Change your mode at any time in `F2`:
 
-В `F2 → режим` можно в любой момент выбрать:
+- **Guided** (`guided`): gradually unlock letters.
+- **All letters** (`free`): use the entire alphabet from the start.
+- **Custom letters** (`custom`): practice only your chosen set.
 
-- **По этапам** (`guided`): постепенное открытие букв.
-- **Все буквы** (`free`): весь алфавит с первого упражнения.
-- **Свои буквы** (`custom`): только выбранный вами набор.
+Select custom letters and press `Enter` to edit. `Ctrl+U` clears the field,
+`Enter` applies the set and enables custom mode, and `Esc` cancels editing.
+RU/EN sets are saved separately. One letter is enough; duplicates and characters
+outside the selected alphabet are removed. When real words cannot cover the
+whole set, a clearly labeled letter drill uses only your chosen letters.
 
-`F2 → свои буквы → Enter` открывает редактор. `Ctrl+U` очищает поле, `Enter`
-применяет набор и включает свой режим, `Esc` отменяет редактирование. Наборы
-для RU/EN сохраняются отдельно. Достаточно одной буквы; повторы и посторонние
-символы удаляются. Если слов для всего выбранного набора нет, явно включается
-буквенное упражнение. Оно по-прежнему использует только ваши буквы.
+Free and custom practice count toward guided unlocks. Turning adaptation off
+keeps your chosen mode. CLI options: `--mode guided|free|custom`; `--letters`
+selects a custom set and takes precedence over `--mode` for that launch.
 
-Свободные и собственные упражнения засчитываются в освоение этапов.
-Отключение адаптации убирает усиленный подбор слабых букв, сохраняя выбранный режим.
-Через CLI: `--mode guided|free|custom`; `--letters` задаёт свой набор и имеет
-приоритет над `--mode` для текущего запуска.
+## Progress and charts
 
-## Прогресс и графики
+Press `F3` to see speed and accuracy charts, exercise count, practice time,
+confident letters, and current focus. `Tab`, `F4`, or `←→` changes the viewed
+language without changing your exercise. `Esc` returns to where you left off,
+excluding the time spent viewing progress.
 
-Нажмите `F3` или `Ctrl+P`: откроются графики **скорости** и **точности**,
-число упражнений, время практики, уверенные буквы и текущий фокус. `Tab` или
-`←→` переключают русский / английский; язык самой тренировки остаётся прежним.
-`Esc` возвращает к тексту, сохраняя место и исключая время просмотра из таймера.
-`↑/↓` переключают графики и экран букв; также доступны `L` для букв и `G` для графиков.
+Use `↑/↓` to switch between charts and letters; `L` opens letters and `G`
+opens charts. The letters screen shows mastered letters, the set available in
+your current mode, and the next guided unlock. Mastery is permanent; confidence
+on the charts reflects recent practice.
 
-На экране букв видны освоенные буквы, набор, доступный для текущего режима,
-и следующая буква по этапам. Освоение здесь — постоянный результат, а счётчик
-уверенности у графиков отражает последние 30 упражнений.
+![Letter progress and the next unlock — demo data](docs/letters.png)
 
-![Буквы и следующий этап — демонстрационные данные](docs/letters.png)
+![Progress charts — demo data](docs/progress.png)
 
-![Экран прогресса — демонстрационные данные](docs/progress.png)
+These captures use a temporary demo profile. Your own charts appear after your
+first completed exercise. They show the latest 30 exercises per language,
+with exercise numbers on the horizontal axis. Larger screens zoom the accuracy
+scale to your results and label its bounds; compact charts use 0–100%.
 
-На снимках — демонстрационная история из временного профиля. В вашем профиле
-данные появятся после первого завершённого упражнения. Графики показывают
-последние 30 упражнений каждого языка; по горизонтали — их номера. На полном
-экране шкала точности приближается к диапазону ваших результатов, и её границы
-подписаны. В маленьком окне используются компактные графики со шкалой 0–100%.
+History is stored at `$XDG_DATA_HOME/stuk/history.json`, falling back to
+`~/.local/share/stuk/history.json`. Only completed exercises are saved, once
+each. Restarting, switching languages, or quitting mid-exercise adds no record.
+Records contain results and per-letter aggregates, not the text you typed.
+Copy the history file to back it up.
 
-Вся история сохраняется в `$XDG_DATA_HOME/stuk/history.json` или
-`~/.local/share/stuk/history.json`. В неё попадают только завершённые упражнения,
-по одному разу. Прерванные через `Tab`, смену языка или выход не учитываются.
-Хранятся результаты и агрегаты по буквам; сам набранный текст не сохраняется.
-Для резервной копии достаточно скопировать файл истории.
+Writes are atomic and locked across simultaneous instances. If saving fails,
+a warning appears and stuk retries after the next completion, when opening
+progress, and on exit. Until then, results stay in the running app.
+Damaged history files are never automatically overwritten.
 
-Запись атомарная и защищена от одновременного запуска нескольких экземпляров.
-При ошибке сохранения появляется предупреждение; приложение повторяет запись
-при следующем завершении, открытии прогресса и выходе. До успешной записи данные
-доступны в текущем запуске. Повреждённый файл автоматически не перезаписывается.
+## Colors
 
-## Цвета
+The default **Graphite Lavender** palette uses `#16161e` for the background,
+`#e1dbea` for text, and `#c4b5fd` for accents. Settings offer `lavender`,
+`terminal` (your terminal's own colors), and `warm` (sand tones). Changes apply
+immediately.
 
-По умолчанию используется **Graphite Lavender**: фон `#16161e`, текст `#e1dbea`
-и лавандовый акцент `#c4b5fd`.
-В `F2 → палитра` доступны `lavender`, `terminal` (цвета вашего терминала)
-и `warm` (песочная палитра). Переключение применяется сразу.
-
-Свои цвета задаются в секции `colors` файла настроек. Можно переопределить
-только нужные роли; остальные берутся из выбранной палитры:
+Override individual roles in the settings file; other roles keep the palette
+defaults:
 
 ```json
 {
@@ -227,52 +222,52 @@ stuk
 }
 ```
 
-| Поле в `colors` | Назначение |
+| Color role | Purpose |
 | --- | --- |
-| `background` | Фон приложения |
-| `foreground` | Правильно набранные буквы и основной текст |
-| `pending` | Ещё не набранные буквы |
-| `muted` | Подписи и клавиатура |
-| `border` | Рамка и неактивная часть прогресса |
-| `accent` | Курсор, активная клавиша, выбор и прогресс |
-| `error` | Ошибки |
-| `cursor_text` | Буква на фоне курсора |
+| `background` | App background |
+| `foreground` | Correctly typed characters and primary text |
+| `pending` | Characters still to type |
+| `muted` | Labels and keyboard |
+| `border` | Borders and the unfilled progress bar |
+| `accent` | Cursor, active key, selection, and progress |
+| `error` | Mistakes |
+| `cursor_text` | Character on the cursor background |
 
-Поддерживаются `#RRGGBB`, индексы ANSI/xterm `0–255` и строка `"default"`
-для цвета терминала. Например, `"background": "default"` сохраняет его
-исходный фон, включая прозрачность. Явные `colors` имеют приоритет над
-палитрой; для сброса переопределений оставьте `"colors": {}`.
-После ручного редактирования файла перезапустите приложение.
+Values can be `#RRGGBB`, ANSI/xterm indices `0–255`, or `"default"`.
+For example, `"background": "default"` keeps the terminal background, including
+transparency. Explicit overrides take priority over palettes; use `"colors": {}`
+to reset them. Restart after editing the file by hand.
 
-Полный пример: [examples/settings.json](examples/settings.json).
-Точные RGB используются, когда терминал поддерживает direct color или
-изменяемую палитру; иначе выбирается ближайший доступный цвет.
+See [examples/settings.json](examples/settings.json) for a complete example.
+Exact RGB is used with direct color or a mutable terminal palette; otherwise,
+stuk selects the nearest available color.
 
-## Разработка
+## Development
 
 ```sh
 PYTHONPATH=src python3 -m stuk
 PYTHONPATH=src python3 -m unittest discover -s tests -v
-python3 -m compileall -q src tests
+python3 -m compileall -q install.py src tests
 ```
 
-Форматирование и статические проверки — через Ruff (только для разработки):
+Ruff is only needed for development:
 
 ```sh
+python3 -m venv .venv
 .venv/bin/python -m pip install '.[dev]'
-.venv/bin/ruff format src tests
-.venv/bin/ruff check src tests
+.venv/bin/ruff format install.py src tests
+.venv/bin/ruff check install.py src tests
 ```
 
-Исходники находятся в `src/stuk/`: `session.py` отвечает за ввод и результаты,
-`words.py` — за словари, `layout.py` — за переносы и расположение текста,
-`tui.py` — за экран и настройки, `keyboard.py` — за раскладки,
-`settings.py` — за сохранение настроек, `theme.py` и `palette.py` — за цвета,
-`adaptive.py` — за подбор слов, `curriculum.py` — за открытие букв,
-`history.py` — за историю, `charts.py`, `progress.py` и `letters.py` — за прогресс,
-`cli.py` — за параметры запуска.
-Тесты используют только стандартную библиотеку, включая проверки настоящего
-приложения через PTY.
+Source lives in `src/stuk/`. Input and timing are in `session.py`; vocabulary,
+adaptation, and unlocks in `words.py`, `adaptive.py`, and `curriculum.py`;
+screens and layout in `tui.py`, `layout.py`, and `keyboard.py`; preferences and
+colors in `settings.py`, `theme.py`, and `palette.py`; persistence and progress
+in `history.py`, `charts.py`, `progress.py`, and `letters.py`; CLI handling in
+`cli.py`. The standalone installer is `install.py`.
 
-Вдохновение: [btyper](https://github.com/Ada-lave/btyper). Код и словари stuk
-написаны независимо.
+Tests use the standard library, including real terminal sessions via PTY and
+isolated installation checks. They never use real practice history.
+
+Inspired by [btyper](https://github.com/Ada-lave/btyper). stuk's code and
+vocabulary were written independently.

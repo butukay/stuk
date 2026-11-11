@@ -14,7 +14,7 @@
 - `settings.py`, `theme.py`, `palette.py`: preferences, colors, and terminal adaptation.
 - `cli.py`: arguments and terminal validation.
 
-`tests/` contains unit and PTY tests. `docs/` holds terminal captures; `progress.png` uses demo data. `examples/settings.json` documents configurable colors. The `stuk` launcher runs from a checkout.
+`tests/` contains unit, installer, and PTY tests. `docs/` holds terminal captures; `progress.png` uses demo data. `examples/settings.json` documents configurable colors. The `stuk` launcher runs from a checkout. Standalone `install.py` downloads source and installs a zipapp without pip; test it with isolated home and XDG paths. `README.md` is English; keep `README.ru.md` in sync.
 
 ## Build, Test, and Development Commands
 
@@ -22,9 +22,9 @@
 - `./stuk --lang en --words 50`: start a longer English exercise.
 - `PYTHONPATH=src python3 -m stuk`: run the package.
 - `PYTHONPATH=src python3 -m unittest discover -s tests -v`: run unit and PTY tests.
-- `python3 -m compileall -q src tests`: check compilation.
+- `python3 -m compileall -q install.py src tests`: check compilation.
 - `python3 -m venv .venv` followed by `.venv/bin/python -m pip install '.[dev]'`: install development tools.
-- `.venv/bin/ruff format src tests` and `.venv/bin/ruff check src tests`: format and lint.
+- `.venv/bin/ruff format install.py src tests` and `.venv/bin/ruff check install.py src tests`: format and lint.
 
 ## Coding Style & Naming Conventions
 
@@ -36,8 +36,8 @@ Use `unittest`, `test_*.py` files, and behavior-focused methods. Cover correctio
 
 ## Commit & Pull Request Guidelines
 
-No Git history establishes a format. Use concise, imperative subjects and focused commits. Pull requests should explain behavior, link relevant issues, list validation, and include terminal captures for visual changes.
+Use concise, imperative subjects and focused commits, following the existing history. Pull requests should explain behavior, link relevant issues, list validation, and include terminal captures for visual changes.
 
 ## Product & Data Principles
 
-Preserve thin borders, quiet colors, and spacing; omit branding. Show metrics after exercises; keep graphs and letters on F3. Align RU/EN and separate learning histories. Keep earned unlocks permanent and respect guided, free, and custom choices; never leak letters outside the selected alphabet. Save completed exercises once; preserve damaged files. Pause in menus and undersized terminals. Validate settings and restore terminal colors. Avoid network requests and unnecessary menus.
+Preserve thin borders, quiet colors, and spacing; omit branding. Show metrics after exercises; keep graphs and letters on F3. Align RU/EN and separate learning histories. Keep earned unlocks permanent and respect guided, free, and custom choices; never leak letters outside the selected alphabet. Save completed exercises once; preserve damaged files. Pause in menus and undersized terminals. Validate settings and restore terminal colors. Keep the trainer offline; only installation downloads source. Avoid unnecessary menus.
