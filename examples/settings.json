@@ -1,0 +1,22 @@
+{
+  "language": "ru",
+  "words": 25,
+  "show_keyboard": false,
+  "adaptive": true,
+  "practice_mode": "guided",
+  "custom_letters": {
+    "ru": "енотас",
+    "en": "enirat"
+  },
+  "theme": "lavender",
+  "colors": {
+    "background": "#16161e",
+    "foreground": "#e1dbea",
+    "muted": "#8d859e",
+    "border": "#38303f",
+    "pending": "#746c83",
+    "accent": "#c4b5fd",
+    "error": "#ed9aaa",
+    "cursor_text": "#16161e"
+  }
+}
